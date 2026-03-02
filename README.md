@@ -22,5 +22,5 @@
 
 ```yaml
 vars:
-  repo_url: "https://github.com/ВАШ_НИК/devops-counter-app.git"
+  repo_url: "https://github.com/charnes-test(НИК)/counter-app(НАЗВАНИЕ РЕПОЗИТОРИЯ).git"
   project_dir: "/opt/my-app"
