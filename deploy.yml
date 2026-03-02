@@ -1,10 +1,9 @@
 ---
 - name: Развертывание нашего приложения
   hosts: webservers
-  become: yes  # Выполнять команды от имени sudo (root)
+  become: yes 
 
   vars:
-    # Ссылка на твой репозиторий (ЗАМЕНИ НА СВОЮ!)
     repo_url: "https://github.com/charnes-test/counter-test.git"
     # Куда клонировать проект
     project_dir: "/opt/my-app"
