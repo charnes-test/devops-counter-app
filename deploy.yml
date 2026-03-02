@@ -1,0 +1,39 @@
+---
+- name: Развертывание нашего приложения
+  hosts: webservers
+  become: yes  # Выполнять команды от имени sudo (root)
+
+  vars:
+    # Ссылка на твой репозиторий (ЗАМЕНИ НА СВОЮ!)
+    repo_url: "https://github.com/charnes-test/counter-test.git"
+    # Куда клонировать проект
+    project_dir: "/opt/my-app"
+
+  tasks:
+    # 1. Обновляем кэш пакетов (аналог sudo apt update)
+    - name: Обновить кэш apt
+      apt:
+        update_cache: yes
+
+    # 2. Устанавливаем Docker и Git (если их нет)
+    - name: Установить Docker, Docker-Compose и Git
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+          - git
+        state: present
+
+    # 3. Клонируем репозиторий
+    - name: Скачать код из Git
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ project_dir }}"
+        version: main
+        force: yes # Если папка есть, обновить её
+
+    # 4. Запускаем проект
+    - name: Запустить Docker Compose
+      command: docker compose up -d --build
+      args:
+        chdir: "{{ project_dir }}" # Перейти в папку перед запуском
